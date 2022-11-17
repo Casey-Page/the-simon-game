@@ -1,0 +1,64 @@
+body {
+    text-align: center;
+    background-color: #404258;
+}
+
+h1 {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 4rem;
+    margin: 5% auto;
+    color: #6B728E;
+}
+
+/* Button Layout */
+
+.container {
+    margin: 0 auto;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: center;
+    margin: 5%;
+}
+
+.block {
+    display: inline-block;
+    width: 160px;
+    height: 160px;
+    background-color: grey;
+    border: 8px solid black;
+    border-radius: 20px;
+    margin: 0 20px;
+}
+
+
+/* Button Colours */
+
+#green {
+    background-color: green;
+}
+#red {
+    background-color: red;
+}
+#yellow {
+    background-color: yellow;
+}
+#blue {
+    background-color: blue;
+}
+
+/* Animation Class */
+
+.pressed {
+    transition: 1s;
+    scale: 0.8;
+    opacity: 0.5;
+    background-color: grey;
+}
+
+/* Gameover */
+
+.game-over {
+    background-color: red;
+}
