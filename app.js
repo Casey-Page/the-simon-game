@@ -12,7 +12,7 @@ let highScore = 0;
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
   // true for mobile device
   
-  $('*').tap(function () {
+  $('*').on('tap', function () {
     if(!started) {
       $('#level-heading').text('Level ' + level);
       nextSequence();
@@ -56,7 +56,7 @@ function nextSequence() {
 }
 
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-  $('.block').tap(function () {
+  $('.block').on('tap', function () {
 
     // Set user colour to the id attribute
     let userColour = $(this).attr('id');
