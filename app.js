@@ -6,15 +6,33 @@ let userPattern = [];
 let started = false;
 let level = 0;
 let incorrectSound = new Audio('sounds/wrong.mp3');
+let score = 0
+let highScore = 0;
 
-// Start game on keydown
-$('*').keydown(function() {
-  if(!started) {
-    $('#level-heading').text('Level ' + level);
-    nextSequence();
-    started = true;
-  }
-});
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  // true for mobile device
+  
+  $('*').tap(function () {
+    if(!started) {
+      $('#level-heading').text('Level ' + level);
+      nextSequence();
+      started = true;
+    }
+  });
+}
+
+else{
+  // false for not mobile device
+  
+  // Start game on keydown
+  $('*').keydown(function() {
+    if(!started) {
+      $('#level-heading').text('Level ' + level);
+      nextSequence();
+      started = true;
+    }
+  });
+}
 
 // Create the next sequence
 function nextSequence() {
@@ -22,7 +40,7 @@ function nextSequence() {
   userPattern = [];
 
   // Increment level each sequence
-  level++; 
+  level++;
   
   $('#level-heading').text('Level ' + level);
 
@@ -37,27 +55,50 @@ function nextSequence() {
   console.log(gamePattern);
 }
 
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  $('.block').tap(function () {
+
+    // Set user colour to the id attribute
+    let userColour = $(this).attr('id');
+    userPattern.push(userColour);
+  
+    playSound(userColour);
+    animatePress(userColour);
+    checkAnswer(userPattern.length-1);
+  });
+}
+
+else {
+
 // Handler function to detect when any block is clicked    
-$('.block').click(function () {
+  $('.block').click(function () {
 
-  // Set user colour to the id attribute
-  let userColour = $(this).attr('id');
-  userPattern.push(userColour);
+    // Set user colour to the id attribute
+    let userColour = $(this).attr('id');
+    userPattern.push(userColour);
 
-  playSound(userColour);
-  animatePress(userColour);
-  checkAnswer(userPattern.length-1);
-});
+    playSound(userColour);
+    animatePress(userColour);
+    checkAnswer(userPattern.length-1);
+  });
+}
 
 // Check if userPattern matches gamePattern
 function checkAnswer(currentLevel) {
 
   // Check index's match
   if(userPattern[currentLevel] === gamePattern[currentLevel]) {
-    console.log('yay');
 
     // Check array lengths match
     if(userPattern.length === gamePattern.length) {
+      score++;
+
+      if (score > localStorage.getItem(highScore)) {
+        highScore = score;
+        localStorage.setItem('highScore', score);
+        console.log(highScore);
+      }
+
       setTimeout(function () {
         nextSequence();
       }, 1000);
@@ -79,6 +120,7 @@ function checkAnswer(currentLevel) {
 // Reset variables to restart game
 function restartGame() {
   gamePattern = [];
+  score = 0;
   level = 0;
   started = false;
 }
